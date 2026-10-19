@@ -1,0 +1,498 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gửi Em - 20/10 ❤️</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            overflow-x: hidden;
+            font-family: "Segoe UI", Arial, sans-serif;
+            color: white;
+            background:
+                radial-gradient(circle at top, #8f214d, transparent 55%),
+                linear-gradient(135deg, #20051c, #5b1039, #24051e);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 24px 14px;
+        }
+
+        /* Ánh sáng nền */
+        body::before {
+            content: "";
+            position: fixed;
+            width: 350px;
+            height: 350px;
+            border-radius: 50%;
+            background: #ff4f91;
+            filter: blur(130px);
+            opacity: 0.2;
+            top: 10%;
+            left: -100px;
+            pointer-events: none;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 460px;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .subtitle {
+            font-size: 12px;
+            letter-spacing: 5px;
+            color: #ffc2d8;
+            margin-bottom: 14px;
+            animation: fadeIn 1.5s ease;
+        }
+
+        h1 {
+            font-family: Georgia, serif;
+            font-size: clamp(32px, 8vw, 48px);
+            font-weight: normal;
+            color: #fff0f6;
+            text-shadow: 0 0 25px #ff5797;
+            margin-bottom: 12px;
+        }
+
+        .intro {
+            color: #ffd7e6;
+            font-size: 14px;
+            line-height: 1.7;
+            margin-bottom: 30px;
+        }
+
+        /* Trái tim chính */
+        .big-heart {
+            font-size: 75px;
+            display: inline-block;
+            filter: drop-shadow(0 0 18px #ff4d88);
+            animation: heartbeat 1.15s infinite;
+            margin-bottom: 22px;
+        }
+
+        /* Phong bì */
+        .envelope-area {
+            width: 270px;
+            height: 190px;
+            margin: 0 auto 28px;
+            position: relative;
+            perspective: 900px;
+        }
+
+        .envelope {
+            width: 100%;
+            height: 145px;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            background: #ffb1cb;
+            border-radius: 5px;
+            box-shadow: 0 12px 35px #0005;
+        }
+
+        /* Mặt trước phong bì */
+        .envelope::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(145deg, #ffb4cf, #ff7ca8);
+            clip-path: polygon(0 0, 50% 62%, 100% 0, 100% 100%, 0 100%);
+            border-radius: 5px;
+            z-index: 3;
+        }
+
+        /* Nắp phong bì */
+        .flap {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 105px;
+            background: #ff8db5;
+            clip-path: polygon(0 0, 100% 0, 50% 100%);
+            transform-origin: top;
+            transition: transform 0.8s ease;
+            z-index: 5;
+        }
+
+        /* Tờ thư */
+        .letter {
+            position: absolute;
+            bottom: 5px;
+            left: 12px;
+            width: calc(100% - 24px);
+            height: 125px;
+            padding: 18px 8px;
+            background: #fff8fb;
+            border-radius: 5px;
+            color: #a52d5a;
+            z-index: 2;
+            transition: transform 1s ease, height 1s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .letter-heart {
+            font-size: 32px;
+            margin-bottom: 6px;
+        }
+
+        .letter small {
+            font-family: Georgia, serif;
+            font-size: 15px;
+        }
+
+        /* Trái tim trên phong bì */
+        .seal {
+            position: absolute;
+            z-index: 6;
+            top: 62px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 36px;
+            filter: drop-shadow(0 2px 4px #b52a5c66);
+            transition: opacity 0.3s ease;
+        }
+
+        /* Khi mở thiệp */
+        .envelope-area.open .flap {
+            transform: rotateX(180deg);
+            z-index: 1;
+        }
+
+        .envelope-area.open .letter {
+            transform: translateY(-95px);
+            height: 170px;
+            z-index: 4;
+        }
+
+        .envelope-area.open .seal {
+            opacity: 0;
+        }
+
+        /* Nút bấm */
+        .open-button {
+            border: 1px solid #ffb6d0;
+            background: linear-gradient(135deg, #ff5b98, #dc2e70);
+            color: white;
+            font-size: 15px;
+            font-weight: 600;
+            padding: 14px 28px;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 6px 25px #ff438655;
+            transition: transform 0.25s, box-shadow 0.25s;
+        }
+
+        .open-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 32px #ff438899;
+        }
+
+        .open-button:active {
+            transform: scale(0.96);
+        }
+
+        /* Nội dung lời chúc */
+        .message {
+            display: none;
+            margin-top: 30px;
+            padding: 25px 22px;
+            border: 1px solid #ffb6d044;
+            border-radius: 20px;
+            background: #ffffff0d;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 40px #0002;
+        }
+
+        .message.show {
+            display: block;
+            animation: messageIn 1s ease forwards;
+        }
+
+        .message h2 {
+            color: #ffb9d2;
+            font-family: Georgia, serif;
+            font-size: 27px;
+            font-weight: normal;
+            margin-bottom: 18px;
+        }
+
+        .message p {
+            font-size: 16px;
+            line-height: 1.9;
+            color: #fff0f6;
+        }
+
+        .signature {
+            margin-top: 22px;
+            color: #ffb1cd;
+            font-family: Georgia, serif;
+            font-size: 18px;
+            font-style: italic;
+        }
+
+        .footer {
+            margin-top: 28px;
+            color: #ffc8dc99;
+            font-size: 11px;
+            letter-spacing: 2px;
+        }
+
+        /* Trái tim bay */
+        .floating-heart {
+            position: fixed;
+            bottom: -40px;
+            pointer-events: none;
+            z-index: 1;
+            animation: floatUp linear forwards;
+            will-change: transform, opacity;
+        }
+
+        /* Lấp lánh */
+        .sparkle {
+            position: fixed;
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: #fff1f7;
+            box-shadow: 0 0 10px #ff9fc4;
+            pointer-events: none;
+            animation: twinkle 2s infinite ease-in-out alternate;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            15% { transform: scale(1.16); }
+            30% { transform: scale(1); }
+            45% { transform: scale(1.1); }
+            60% { transform: scale(1); }
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translate3d(0, 0, 0) rotate(0deg);
+                opacity: 0;
+            }
+            10% { opacity: 0.9; }
+            50% {
+                transform: translate3d(35px, -50vh, 0) rotate(20deg);
+            }
+            85% { opacity: 0.8; }
+            100% {
+                transform: translate3d(-25px, -115vh, 0) rotate(-25deg);
+                opacity: 0;
+            }
+        }
+
+        @keyframes twinkle {
+            from { opacity: 0.2; transform: scale(0.7); }
+            to { opacity: 1; transform: scale(1.4); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes messageIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 380px) {
+            .envelope-area {
+                transform: scale(0.88);
+                margin-top: -10px;
+                margin-bottom: 15px;
+            }
+
+            .message {
+                padding: 22px 16px;
+            }
+
+            .message p {
+                font-size: 15px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+        
+/* Khu vực trái tim lớn */
+.message {
+    display: none;
+    margin: 35px auto 0;
+    width: 100%;
+    max-width: 390px;
+    overflow: visible;
+}
+
+.message.show {
+    display: block;
+    animation: messageIn 1s ease forwards;
+}
+
+
+
+    </style>
+</head>
+
+<body>
+    <main class="container">
+        <div class="subtitle">A LITTLE GIFT FOR YOU</div>
+
+        <h1>Happy 20/10</h1>
+
+        <p class="intro">
+            Gửi đến cô gái đặc biệt nhất trong lòng anh ❤️
+        </p>
+
+        <div class="big-heart">💗</div>
+
+        <div class="envelope-area" id="envelopeArea">
+            <div class="envelope">
+                <div class="letter">
+                    <div class="letter-heart">💌</div>
+                    <small>Gửi em yêu...</small>
+                </div>
+                <div class="flap"></div>
+                <div class="seal">❤️</div>
+            </div>
+        </div>
+
+        <button
+            class="open-button"
+            id="openButton"
+            type="button"
+            onclick="window.location.href='./heart.html'"
+        >
+            💌 Nhấn để mở thiệp
+        </button>
+
+        
+<section class="message" id="message">
+    <div class="love-heart">
+        <div class="heart-content">
+            <div class="heart-title">Gửi em yêu ❤️</div>
+
+            <div class="heart-line"></div>
+
+            <p>
+                Chúc em 20/10 thật hạnh phúc,
+                luôn xinh đẹp và mãi là cô gái
+                đặc biệt trong lòng anh. ❤️
+            </p>
+
+            <div class="heart-line"></div>
+
+            <div class="heart-signature">
+                Thương em thật nhiều 💕
+            </div>
+        </div>
+    </div>
+</section>
+
+
+        <div class="footer">
+            MADE WITH LOVE • 20.10
+        </div>
+    </main>
+
+    <script>
+        const envelopeArea = document.getElementById("envelopeArea");
+        const message = document.getElementById("message");
+        const openButton = document.getElementById("openButton");
+
+        let isOpen = false;
+
+        // Mở và đóng thiệp
+       // Mở và đóng thiệp
+        function toggleCard() {
+            isOpen = !isOpen;
+
+            envelopeArea.classList.toggle("open", isOpen);
+            message.classList.toggle("show", isOpen);
+
+            if (isOpen) {
+                 openButton.innerHTML = "💖 Đóng thiệp";
+                launchHearts(18);
+            } else {
+              openButton.innerHTML = "💌 Mở món quà dành cho em";
+                     }
+}
+
+        // Tạo trái tim bay lên
+        function createHeart() {
+            const heart = document.createElement("div");
+            heart.className = "floating-heart";
+
+            const symbols = ["❤️", "💗", "💕", "💖", "💘", "💓"];
+            heart.textContent =
+                symbols[Math.floor(Math.random() * symbols.length)];
+
+            heart.style.left = Math.random() * 100 + "vw";
+            heart.style.fontSize = (14 + Math.random() * 22) + "px";
+            heart.style.animationDuration = (6 + Math.random() * 6) + "s";
+
+            document.body.appendChild(heart);
+
+            heart.addEventListener("animationend", () => {
+                heart.remove();
+            });
+        }
+
+        // Tạo một đợt trái tim khi mở thiệp
+        function launchHearts(amount) {
+            for (let i = 0; i < amount; i++) {
+                setTimeout(createHeart, i * 90);
+            }
+        }
+
+        // Trái tim bay liên tục, có giới hạn để tránh quá tải
+        setInterval(() => {
+            if (document.querySelectorAll(".floating-heart").length < 24) {
+                createHeart();
+            }
+        }, 650);
+
+        // Tạo các đốm sáng nền
+        for (let i = 0; i < 30; i++) {
+            const sparkle = document.createElement("div");
+            sparkle.className = "sparkle";
+
+            sparkle.style.left = Math.random() * 100 + "vw";
+            sparkle.style.top = Math.random() * 100 + "vh";
+            sparkle.style.animationDelay = Math.random() * 2 + "s";
+
+            document.body.appendChild(sparkle);
+        }
+    </script>
+</body>
+</html>
